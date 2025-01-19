@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+        .sidebar {
+            width: 20%;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 5px 0;
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            background-color: #444;
+            border-radius: 5px;
+        }
+        .sidebar ul li a:hover {
+            background-color: #555;
+        }
+        .container {
+            display: flex;
+            flex: 1;
+        }
+        .form-container {
+            flex: 1;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+        }
+        .content {
+            width: 80%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        img {
+            max-width: 200px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        /* Enhanced button styles */
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(1);
+        }
+
+        .update-btn {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        .logout-btn {
+            background-color: #DC3545;
+            color: #fff;
+        }
+
+        /* Add Topic button - Green */
+        .add-topic-btn {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        /* Align buttons horizontally */
+        .button-container {
+            display: flex;
+            gap: 20px; /* Space between buttons */
+            margin-top: 20px;
+        }
+
+        /* Styling for the Add Topic section */
+        .form-container h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .form-container label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .form-container input:focus, .form-container textarea:focus {
+            outline: none;
+            border-color: #007BFF;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        
+            <h2>Notes</h2>
+            <ul>
+                {% for topic in topics %}
+                <li>
+                    <form method="POST" action="/shownotes">
+                        <button type="submit" style="padding: 10px 20px;">
+                            {{ topic.title }}
+                        </button>
+                        <input type="hidden" name="Lefttitle" value="{{ topic.title }}">
+                        <input type="hidden" name="Leftdatetime" value="{{ topic.datetime }}">
+
+                                            
+                    </form>
+                </li>
+                {% endfor %}
+
+            </ul>
+        
+    </div>
+    
+
+    <div class="form-container">
+        <h2>Create a Note</h2>
+        <form method="POST" action="/topicadd">
+            <label for="title">Title:</label>
+            <input type="text" id="title" value="{{title}}" name="title" required>
+            
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" rows="10" required>{{content}}</textarea>
+            
+            <!-- Add Topic button with green color -->
+            <button class="add-topic-btn" type="submit">Add Topic</button>
+        </form>
+        
+        <!-- Horizontal buttons -->
+        <div class="button-container">
+       
+            <a href="{{ url_for('logout') }}">
+                <button class="logout-btn" type="button">Log Out</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
